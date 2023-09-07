@@ -13,7 +13,7 @@ class Calendar extends Component {
         date: new Date(),
         years: [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
         month: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-        weekDays: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+        weekDays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
         onChange: Function.prototype //empty function
     };
 
@@ -107,9 +107,9 @@ class Calendar extends Component {
                         <tr key={index}>
                             {week.map((date, index) =>
                                 date ?
-                                    <td onClick={()=>this.dayClick(date)} key={index}>{date.getDate()}</td>
+                                    <td onClick={()=>this.dayClick(date)} key={index} className={"cell"}>{date.getDate()}</td>
                                     :
-                                    <td key={index}></td>
+                                    <td key={index} className={"cell"}></td>
                             )}
                         </tr>
 

@@ -1,0 +1,38 @@
+.calendar {
+    width: 1600px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.calendar header {
+    display: flex;
+    margin: 50px auto;
+    gap: 40px;
+}
+
+.calendar header button {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.calendar header select {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+/*настроить option*/
+
+.cell {
+    width: 150px;
+    height: 150px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+
+}
+.cell:hover {
+    background-color: #eaeaea;
+    cursor: pointer;
+}
