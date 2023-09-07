@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import './Calendar.css';
+import AuthenticationButtons from "../AuthenticationButtons/AuthenticationButtons";
 
 
 class Calendar extends Component {
@@ -91,6 +92,11 @@ class Calendar extends Component {
                     </select>
 
                     <button onClick={this.nextMonthButtonClick}>{'>'}</button>
+                    <div>
+                        <AuthenticationButtons value = "Регистрация"/>
+                        <AuthenticationButtons value = "Вход"/>
+                    </div>
+
                 </header>
 
                 <table>

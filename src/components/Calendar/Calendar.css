@@ -8,20 +8,35 @@
 .calendar header {
     display: flex;
     margin: 50px auto;
-    gap: 40px;
+    gap: 60px;
 }
 
 .calendar header button {
     width: 100px;
     height: 50px;
+    border: 2px solid transparent;
     border-radius: 10px;
+    background-color: #006F48;
+    font-weight: bold;
+
 }
+
+.calendar header button:hover {
+    background-color: #004d32;
+    color:white;
+    cursor: pointer;
+}
+
 
 .calendar header select {
     width: 200px;
     height: 50px;
     border-radius: 10px;
+    text-align: center;
+    background-color: #006F48;
+    font-weight: bold;
 }
+
 
 /*настроить option*/
 
