@@ -1,15 +1,12 @@
 import React, {Component} from "react";
 import './Calendar.css';
-import AuthenticationButtons from "../AuthenticationButtons/AuthenticationButtons";
+import Button from "../Buttons/Button";
+import * as calendar from "./CalendarFunctions"
+import authentication from "../Authentication/Authentication";
 
 
 class Calendar extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //
-    //     };
-    // }
+
     static defaultProps = {
         date: new Date(),
         years: [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
@@ -67,39 +64,32 @@ class Calendar extends Component {
 
         const {years, month, weekDays} = this.props;
 
-        const monthData = [
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()]
-        ];
+        const monthData = calendar.getMonthData(this.year, this.month);
 
         return (
             <div className="calendar">
                 <header>
-                    <button onClick={this.prevMonthButtonClick}>{'<'}</button>
 
-                    <select value={this.month} ref={element => this.monthSelect = element} onChange={this.selectChange}>
-                        {month.map((name, index) =>
-                            <option key={name} value={index}>{name}</option>
-                        )}
-                    </select>
-                    <select value={this.year} ref={element => this.yearSelect = element} onChange={this.selectChange}>
-                        {years.map((name, index) =>
-                            <option key={name} value={name}>{name}</option>
-                        )}
-                    </select>
+                        <button onClick={this.prevMonthButtonClick}>{'<'}</button>
 
-                    <button onClick={this.nextMonthButtonClick}>{'>'}</button>
-                    <div>
-                        <AuthenticationButtons value = "Регистрация"/>
-                        <AuthenticationButtons value = "Вход"/>
-                    </div>
+                        <select value={this.month} ref={element => this.monthSelect = element} onChange={this.selectChange}>
+                            {month.map((name, index) =>
+                                <option key={name} value={index}>{name}</option>
+                            )}
+                        </select>
+                        <select value={this.year} ref={element => this.yearSelect = element} onChange={this.selectChange}>
+                            {years.map((name, index) =>
+                                <option key={name} value={name}>{name}</option>
+                            )}
+                        </select>
+
+                        <button onClick={this.nextMonthButtonClick}>{'>'}</button>
+
+
 
                 </header>
 
-                <table>
+                <table className="table">
                     <thead>
                     <tr>
                         {weekDays.map(day =>
@@ -115,13 +105,14 @@ class Calendar extends Component {
                                 date ?
                                     <td onClick={()=>this.dayClick(date)} key={index} className={"cell"}>{date.getDate()}</td>
                                     :
-                                    <td key={index} className={"cell"}></td>
+                                    <td key={index} className={"empty-cell"}></td>
                             )}
                         </tr>
 
                     )}
                     </tbody>
                 </table>
+
             </div>
         );
     }

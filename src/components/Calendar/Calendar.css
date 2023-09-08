@@ -1,53 +1,88 @@
 .calendar {
-    width: 1600px;
+    width: 1300px;
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .calendar header {
     display: flex;
-    margin: 50px auto;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
     gap: 60px;
 }
 
 .calendar header button {
-    width: 100px;
+    width: 50px;
     height: 50px;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    background-color: #006F48;
+    border: 1px solid darkgrey;
+    border-radius: 100px;
     font-weight: bold;
-
+    background-color: white;
 }
 
 .calendar header button:hover {
-    background-color: #004d32;
-    color:white;
+    filter: brightness(0.9);
+    transition: 0.5s ease;
     cursor: pointer;
 }
 
-
-.calendar header select {
-    width: 200px;
-    height: 50px;
-    border-radius: 10px;
-    text-align: center;
-    background-color: #006F48;
-    font-weight: bold;
+.calendar header button:active {
+    filter: brightness(0.6);
+    transition:  0.1s ease;
 }
 
+.calendar header select {
+    width: 214px;
+    height: 52px;
+    padding: 8px 16px 8px 16px;
+    border-radius: 8px;
+    gap: 12px;
+    color: #3B383D;
+    border: 1px solid darkgrey;
+}
+
+.calendar header select:hover {
+    filter: brightness(0.9);
+    transition: 0.5s ease;
+}
+
+.calendar header select:active {
+    filter: brightness(0.6);
+    transition: 0.1s ease;
+}
 
 /*настроить option*/
 
 .cell {
-    width: 150px;
-    height: 150px;
-    border: 2px solid transparent;
-    border-radius: 20px;
-
+    width: 14.2%;
+    height: 120px;
+    border: 1px solid #707279;
 }
 .cell:hover {
     background-color: #eaeaea;
     cursor: pointer;
+}
+
+.empty-cell {
+    width: 14.2%;
+    height: 120px;
+    border: 1px solid #707279;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table thead {
+    height: 30px;
+    width: 100%;
+}
+
+.table thead th {
+    padding: 4px 12px 4px 12px;
+    gap: 10px;
+    color: #707279;
+    font-weight: 400;
 }

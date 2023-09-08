@@ -15,7 +15,7 @@ const Month = {
     August: 7,
     September: 8,
     October: 9,
-    Novermber: 10,
+    November: 10,
     December: 11
 };
 
