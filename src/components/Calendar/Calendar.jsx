@@ -2,10 +2,11 @@ import React, {Component} from "react";
 import './Calendar.css';
 import Button from "../Buttons/Button";
 import * as calendar from "./CalendarFunctions"
-import authentication from "../Authentication/Authentication";
+import authentication from "../../pages/Authentication/Authentication";
 
 
 class Calendar extends Component {
+
 
     static defaultProps = {
         date: new Date(),
