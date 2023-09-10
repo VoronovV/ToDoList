@@ -10,8 +10,8 @@ class Authentication extends Component {
 
                     <h1>ToDoList</h1>
                     <div>
-                        <Link to='/calendar'> <Button value = "Вход"/></Link>
-                        <Link to='/calendar'> <Button value = "Регистрация" registration = "registration"/></Link>
+                        <Link to='/login'> <Button value = "Вход"/></Link>
+                        <Link to='/registration'> <Button value = "Регистрация" registration = "registration"/></Link>
                     </div>
 
 

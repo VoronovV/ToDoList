@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './header.css'
 import Button from "../Buttons/Button";
+import {Link} from "react-router-dom";
 
 class Header extends Component {
     constructor(props) {
@@ -12,8 +13,10 @@ class Header extends Component {
     render() {
         return (
             <div className="header">
-                <Button value = "Вход"/>
-                <Button value = "Регистрация" registration = "registration"/>
+                <Link to="/">
+                    <Button value = "Выход" registration = "registration"/>
+                </Link>
+
             </div>
         );
     }

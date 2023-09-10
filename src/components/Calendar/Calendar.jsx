@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import './Calendar.css';
-import Button from "../Buttons/Button";
 import * as calendar from "./CalendarFunctions"
-import authentication from "../../pages/Authentication/Authentication";
+import { useNavigate  } from "react-router-dom";
 
 
 class Calendar extends Component {
@@ -13,8 +12,14 @@ class Calendar extends Component {
         years: [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
         month: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
         weekDays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-        onChange: Function.prototype //empty function
+        onChange: Function.prototype
+
     };
+
+    navigateToSomePage = () => {
+        this.props.history.push('/dayPage'); // для перехода на определенный маршрут
+        // this.props.history.replace('/your-path'); // для замены текущего маршрута
+    }
 
     state = {
         date: this.props.date,
@@ -55,7 +60,7 @@ class Calendar extends Component {
         this.setState({date});
     };
 
-    dayClick = date => {
+    dayClick = (date) => {
         this.setState({selectedDate: date});
 
         this.props.onChange(date);
@@ -104,7 +109,8 @@ class Calendar extends Component {
                         <tr key={index}>
                             {week.map((date, index) =>
                                 date ?
-                                    <td onClick={()=>this.dayClick(date)} key={index} className={"cell"}>{date.getDate()}</td>
+                                        <td onClick={ ()=> {this.dayClick(date); this.navigateToSomePage()}
+                                        } key={index} className="cell">{date.getDate()}</td>
                                     :
                                     <td key={index} className={"empty-cell"}></td>
                             )}
