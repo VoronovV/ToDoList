@@ -1,26 +1,57 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm, Controller} from "react-hook-form"
 import './login.css'
 import {Link, useNavigate} from 'react-router-dom';
 import Button from "../../components/Buttons/Button";
+import axios from "axios";
+
 
 const Login = () => {
 
     const navigate = useNavigate();
 
+    const [errors, setErrors] = useState("")
+
     const {
         register,
-        formState: {errors, isValid},
+        formState: {isValid},
         handleSubmit,
         control
     } = useForm({
         mode: "onBlur"
     });
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-        navigate('/calendar');
+    const onChangeEmail = (event) => {
+        setEmail(event.target.value);
+    }
+
+    const onChangePassword = (event) => {
+        setPassword(event.target.value);
+    }
+
+    const onSubmit = async (data) => {
+
+        const userData = {
+            email:email,
+            password:password
+        }
+
+        console.log(userData);
+
+        const user = await axios.post('https://calendar-test.k3s.bind.by/api/login/', userData).
+        then(function (response){navigate('/calendar');}).
+        catch(function (error) {
+            if (error.response) {
+                for(let key in error.response.data){
+                    setErrors(error.response.data[key][0]);
+                }
+                console.log(error.response.data);
+                }});
+
+
     }
 
     return (
@@ -36,33 +67,17 @@ const Login = () => {
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <label>
 
-                        <input placeholder=" Логин" {
-                                   ...register("login", {
-                                       required: "Поле обязательно к заполнению",
-                                       minLength: {
-                                           value:5,
-                                           message: "Минимум 5 символов"
-                                       }
-                                   })
-                               }
+                        <input placeholder=" Логин" onChange={onChangeEmail}
                         />
                     </label>
                     <div>
-                        {errors?.login && <p>{errors?.login?.message || "Error!"}</p>}
+                        {errors && <p>{errors || "Error!"}</p>}
                     </div>
                     <label >
                         <Controller name="password"
                                     control={control}
                                     render={() => (
-                                        <input placeholder=" Пароль" type="password" {
-                                            ...register("password", {
-                                                required: "Поле обязательно к заполнению",
-                                                minLength: {
-                                                    value:5,
-                                                    message: "Минимум 5 символов"
-                                                }
-                                            })
-                                        }
+                                        <input placeholder=" Пароль" type="password" onChange={onChangePassword}
                                         />
                                         )}
                                         />

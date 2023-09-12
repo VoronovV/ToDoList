@@ -1,25 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './header.css'
 import Button from "../Buttons/Button";
 import {Link} from "react-router-dom";
 
-class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+function Header(props) {
+    return (
+        <div className="header">
+            <Link to="/">
+                <Button value = "Выход" registration = "registration"/>
+            </Link>
 
-        }
-    }
-    render() {
-        return (
-            <div className="header">
-                <Link to="/">
-                    <Button value = "Выход" registration = "registration"/>
-                </Link>
-
-            </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default Header;

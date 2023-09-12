@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import App from "./App";
 import Authentication from "./pages/Authentication/Authentication";
 import Login from "./pages/Login/Login";
-import Registration from "./pages/ Registration/ Registration";
+import Registration from "./pages/Registration/Registration";
 import DayPage from "./pages/DayPage/DayPage";
 
 const Router =  () => {

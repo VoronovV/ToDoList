@@ -1,130 +1,132 @@
-import React, {Component} from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import './Calendar.css';
-import * as calendar from "./CalendarFunctions"
-import { useNavigate  } from "react-router-dom";
+import * as calendar from './CalendarFunctions';
+import { useNavigate } from 'react-router-dom';
+
+function Calendar(props) {
+    const [date, setDate] = useState(props.date);
+    const [currentDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
+    const navigate = useNavigate();
+
+    const year = date.getFullYear();
+    const monthValue = date.getMonth();
 
 
-class Calendar extends Component {
+    const yearSelectRef = useRef(null);
+    const monthSelectRef = useRef(null);
 
 
-    static defaultProps = {
-        date: new Date(),
-        years: [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
-        month: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-        weekDays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-        onChange: Function.prototype
+    const selectedYear = useRef(year);
+    const selectedMonth = useRef(monthValue);
 
+
+    useEffect(() => {
+        selectedYear.current = year;
+        selectedMonth.current = monthValue;
+    }, [year, monthValue]);
+
+    const prevMonthButtonClick = () => {
+        const newDate = new Date(selectedYear.current, selectedMonth.current - 1);
+        console.log({ newDate });
+        setDate(newDate);
     };
 
-    navigateToSomePage = () => {
-        this.props.history.push('/dayPage'); // для перехода на определенный маршрут
-        // this.props.history.replace('/your-path'); // для замены текущего маршрута
-    }
-
-    state = {
-        date: this.props.date,
-        currentDate: new Date(),
-        selectedDate: null
+    const nextMonthButtonClick = () => {
+        const newDate = new Date(selectedYear.current, selectedMonth.current + 1);
+        console.log({ newDate });
+        setDate(newDate);
     };
 
-    get year() {
-        return this.state.date.getFullYear();
-    }
+    const selectChange = () => {
+        const newYear = parseInt(yearSelectRef.current.value);
+        const newMonthValue = parseInt(monthSelectRef.current.value);
 
-    get month() {
-        return this.state.date.getMonth();
-    }
+        const newDate = new Date(newYear, newMonthValue);
+        console.log({ newDate });
+        setDate(newDate);
 
-    get day() {
-        return this.state.date.getDate();
-    }
-
-    prevMonthButtonClick = () => {
-        const date = new Date(this.year, this.month - 1);
-        console.log({date});
-        this.setState({date});
+        // Обновляем выбранный год и месяц
+        selectedYear.current = newYear;
+        selectedMonth.current = newMonthValue;
     };
 
-    nextMonthButtonClick = () => {
-        const date = new Date(this.year, this.month + 1);
-        console.log({date});
-        this.setState({date});
+    const dayClick = (date) => {
+        setSelectedDate(date);
+        props.onChange(date);
+        navigate('/dayPage');
     };
 
-    selectChange = () => {
-         const year = this.yearSelect.value;
-         const month = this.monthSelect.value;
+    const { years, month, weekDays } = props;
+    const monthData = calendar.getMonthData(selectedYear.current, selectedMonth.current);
 
-        const date = new Date(year, month);
-        console.log({date});
-        this.setState({date});
-    };
-
-    dayClick = (date) => {
-        this.setState({selectedDate: date});
-
-        this.props.onChange(date);
-    };
-
-    render() {
-
-        const {years, month, weekDays} = this.props;
-
-        const monthData = calendar.getMonthData(this.year, this.month);
-
-        return (
-            <div className="calendar">
-                <header>
-
-                        <button onClick={this.prevMonthButtonClick}>{'<'}</button>
-
-                        <select value={this.month} ref={element => this.monthSelect = element} onChange={this.selectChange}>
-                            {month.map((name, index) =>
-                                <option key={name} value={index}>{name}</option>
-                            )}
-                        </select>
-                        <select value={this.year} ref={element => this.yearSelect = element} onChange={this.selectChange}>
-                            {years.map((name, index) =>
-                                <option key={name} value={name}>{name}</option>
-                            )}
-                        </select>
-
-                        <button onClick={this.nextMonthButtonClick}>{'>'}</button>
-
-
-
-                </header>
-
-                <table className="table">
-                    <thead>
-                    <tr>
-                        {weekDays.map(day =>
-                            <th key={day}>{day}</th>
+    return (
+        <div className="calendar">
+            <header>
+                <button onClick={prevMonthButtonClick}>{'<'}</button>
+                <select value={selectedMonth.current} ref={monthSelectRef} onChange={selectChange}>
+                    {month.map((name, index) => (
+                        <option key={name} value={index}>
+                            {name}
+                        </option>
+                    ))}
+                </select>
+                <select value={selectedYear.current} ref={yearSelectRef} onChange={selectChange}>
+                    {years.map((name) => (
+                        <option key={name} value={name}>
+                            {name}
+                        </option>
+                    ))}
+                </select>
+                <button onClick={nextMonthButtonClick}>{'>'}</button>
+            </header>
+            <table className="table">
+                <thead>
+                <tr>
+                    {weekDays.map((day) => (
+                        <th key={day}>{day}</th>
+                    ))}
+                </tr>
+                </thead>
+                <tbody>
+                {monthData.map((week, index) => (
+                    <tr key={index}>
+                        {week.map((date, index) =>
+                            date ? (
+                                <td
+                                    onClick={() => {
+                                        dayClick(date);
+                                    }}
+                                    key={index}
+                                    className="cell"
+                                >
+                                    {date.getDate()}
+                                </td>
+                            ) : (
+                                <td key={index} className="empty-cell"></td>
+                            )
                         )}
                     </tr>
-                    </thead>
-
-                    <tbody>
-                    {monthData.map((week, index) =>
-                        <tr key={index}>
-                            {week.map((date, index) =>
-                                date ?
-                                        <td onClick={ ()=> {this.dayClick(date); this.navigateToSomePage()}
-                                        } key={index} className="cell">{date.getDate()}</td>
-                                    :
-                                    <td key={index} className={"empty-cell"}></td>
-                            )}
-                        </tr>
-
-                    )}
-                    </tbody>
-                </table>
-
-            </div>
-        );
-    }
-
-
+                ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
+
+Calendar.defaultProps = {
+    date: new Date(),
+    years: [
+        2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030
+    ],
+    month: [
+        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+        'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+    ],
+    weekDays: [
+        'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'
+    ],
+    onChange: Function.prototype
+};
 
 export default Calendar;

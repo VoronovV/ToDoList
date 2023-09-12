@@ -1,18 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {Controller, useForm} from "react-hook-form";
 import Button from "../../components/Buttons/Button";
 import './registration.css'
+import axios from "axios";
 
 function Registration(props) {
 
     const navigate = useNavigate();
 
-
+    const [errors, setErrors] = useState("")
 
     const {
         register,
-        formState: {errors, isValid},
+        formState: {isValid},
         handleSubmit,
         control,
         watch
@@ -21,10 +22,42 @@ function Registration(props) {
     });
     let pwd = watch("password");
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const [email, setEmail] = useState("");
+    const [password1, setPassword1] = useState("");
+    const [password2, setPassword2] = useState("");
 
-        navigate('/calendar');
+    const onChangeEmail = (event) => {
+        setEmail(event.target.value);
+    }
+
+    const onChangePassword1 = (event) => {
+        setPassword1(event.target.value);
+    }
+
+    const onChangePassword2 = (event) => {
+        setPassword2(event.target.value);
+    }
+
+    const onSubmit = async (data) => {
+        const userData = {
+            email:email,
+            password1:password1,
+            password2:password2
+        }
+
+        console.log(userData);
+
+            const user = await axios.post('https://calendar-test.k3s.bind.by/api/registration/', userData).
+            then(function (response){navigate('/calendar')}).
+            catch(function (error) {
+                if (error.response) {
+                    for (let key in error.response.data) {
+                        setErrors(error.response.data[key][0]);
+                    }
+                }
+            });
+
+
     }
 
     return (
@@ -40,19 +73,11 @@ function Registration(props) {
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <label>
 
-                        <input placeholder=" Логин" {
-                            ...register("login", {
-                                required: "Поле обязательно к заполнению",
-                                minLength: {
-                                    value:5,
-                                    message: "Минимум 5 символов"
-                                }
-                            })
-                        }
+                        <input placeholder=" Логин" onChange={onChangeEmail}
                         />
                     </label>
                     <div>
-                        {errors?.login && <p>{errors?.login?.message || "Error!"}</p>}
+                        {errors && <p>{errors || "Error!"}</p>}
                     </div>
                     <label >
                         <Controller name="password"
@@ -66,7 +91,7 @@ function Registration(props) {
                                                     message: "Минимум 5 символов"
                                                 }
                                             })
-                                        }
+                                        } onChange={onChangePassword1}
                                         />
                                     )}
                         />
@@ -88,7 +113,7 @@ function Registration(props) {
                                                     message: "Минимум 5 символов"
                                                 }
                                             })
-                                        }
+                                        } onChange={onChangePassword2}
                                         />
                                     )}
                         />
