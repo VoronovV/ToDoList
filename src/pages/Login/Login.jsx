@@ -6,7 +6,7 @@ import Button from "../../components/Buttons/Button";
 import axios from "axios";
 
 
-const Login = () => {
+function Login() {
 
     const navigate = useNavigate();
 
@@ -35,23 +35,24 @@ const Login = () => {
     const onSubmit = async (data) => {
 
         const userData = {
-            email:email,
-            password:password
+            email: email,
+            password: password
         }
 
         console.log(userData);
 
-        const user = await axios.post('https://calendar-test.k3s.bind.by/api/login/', userData).
-        then(function (response){navigate('/calendar');}).
-        catch(function (error) {
+        const user = await axios.post('https://calendar-test.k3s.bind.by/api/login/', userData).then(function (response) {
+            navigate('/calendar');
+            console.log(response);
+            document.cookie = `token = ${response.data.access}`;
+            console.log(document.cookie.match(/token=(.+?)(;|$)/)[1])
+        }).catch(function (error) {
             if (error.response) {
-                for(let key in error.response.data){
+                for (let key in error.response.data) {
                     setErrors(error.response.data[key][0]);
                 }
-                console.log(error.response.data);
-                }});
-
-
+            }
+        });
     }
 
     return (
@@ -60,7 +61,6 @@ const Login = () => {
                 <Link to="/">
                     <Button value="Назад"/>
                 </Link>
-
             </header>
             <div className="loginForm">
                 <h1>Вход</h1>
@@ -70,21 +70,17 @@ const Login = () => {
                         <input placeholder=" Логин" onChange={onChangeEmail}
                         />
                     </label>
-                    <div>
-                        {errors && <p>{errors || "Error!"}</p>}
-                    </div>
-                    <label >
+                    <label>
                         <Controller name="password"
                                     control={control}
                                     render={() => (
                                         <input placeholder=" Пароль" type="password" onChange={onChangePassword}
                                         />
-                                        )}
-                                        />
-
+                                    )}
+                        />
                     </label>
                     <div>
-                        {errors?.password && <p>{errors?.password?.message || "Error!"}</p>}
+                        {errors && <p>{errors || "Error!"}</p>}
                     </div>
                     <button type="submit" disabled={!isValid}>Войти</button>
                 </form>

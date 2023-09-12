@@ -40,22 +40,22 @@ function Registration(props) {
 
     const onSubmit = async (data) => {
         const userData = {
-            email:email,
-            password1:password1,
-            password2:password2
+            email: email,
+            password1: password1,
+            password2: password2
         }
 
         console.log(userData);
 
-            const user = await axios.post('https://calendar-test.k3s.bind.by/api/registration/', userData).
-            then(function (response){navigate('/calendar')}).
-            catch(function (error) {
-                if (error.response) {
-                    for (let key in error.response.data) {
-                        setErrors(error.response.data[key][0]);
-                    }
+        const user = await axios.post('https://calendar-test.k3s.bind.by/api/registration/', userData).then(function (response) {
+            navigate('/calendar')
+        }).catch(function (error) {
+            if (error.response) {
+                for (let key in error.response.data) {
+                    setErrors(error.response.data[key][0]);
                 }
-            });
+            }
+        });
 
 
     }
@@ -66,20 +66,15 @@ function Registration(props) {
                 <Link to="/">
                     <Button value="Назад"/>
                 </Link>
-
             </header>
             <div className="registrationForm">
                 <h1>Регистрация</h1>
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <label>
-
                         <input placeholder=" Логин" onChange={onChangeEmail}
                         />
                     </label>
-                    <div>
-                        {errors && <p>{errors || "Error!"}</p>}
-                    </div>
-                    <label >
+                    <label>
                         <Controller name="password"
                                     control={control}
                                     render={() => (
@@ -87,7 +82,7 @@ function Registration(props) {
                                             ...register("password", {
                                                 required: "Поле обязательно к заполнению",
                                                 minLength: {
-                                                    value:5,
+                                                    value: 5,
                                                     message: "Минимум 5 символов"
                                                 }
                                             })
@@ -95,12 +90,8 @@ function Registration(props) {
                                         />
                                     )}
                         />
-
                     </label>
-                    <div>
-                        {errors?.password && <p>{errors?.password?.message || "Error!"}</p>}
-                    </div>
-                    <label >
+                    <label>
                         <Controller name="repeatPassword"
                                     control={control}
                                     rules={{validate: value => value === pwd || "Пароли не совпадают"}}
@@ -109,7 +100,7 @@ function Registration(props) {
                                             ...register("repeatPassword", {
                                                 required: "Поле обязательно к заполнению",
                                                 minLength: {
-                                                    value:5,
+                                                    value: 5,
                                                     message: "Минимум 5 символов"
                                                 }
                                             })
@@ -117,10 +108,9 @@ function Registration(props) {
                                         />
                                     )}
                         />
-
                     </label>
                     <div>
-                        {errors?.repeatPassword && <p>{errors?.repeatPassword?.message || "Error!"}</p>}
+                        {errors && <p>{errors || "Error!"}</p>}
                     </div>
                     <button type="submit" disabled={!isValid}>Войти</button>
                 </form>

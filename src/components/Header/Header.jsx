@@ -9,7 +9,6 @@ function Header(props) {
             <Link to="/">
                 <Button value = "Выход" registration = "registration"/>
             </Link>
-
         </div>
     );
 }

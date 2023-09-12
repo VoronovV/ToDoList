@@ -5,7 +5,6 @@ import Header from "./components/Header/Header";
 import Authentication from "./pages/Authentication/Authentication";
 function App() {
   return (
-
     <div className="App">
         {/*<Authentication/>*/}
         <Header/>
