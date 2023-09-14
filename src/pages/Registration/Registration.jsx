@@ -4,6 +4,7 @@ import {Controller, useForm} from "react-hook-form";
 import Button from "../../components/Buttons/Button";
 import './registration.css'
 import axios from "axios";
+import Header from "../../components/Header/Header";
 
 function Registration(props) {
 
@@ -48,7 +49,8 @@ function Registration(props) {
         console.log(userData);
 
         const user = await axios.post('https://calendar-test.k3s.bind.by/api/registration/', userData).then(function (response) {
-            navigate('/calendar')
+            navigate('/calendar');
+
         }).catch(function (error) {
             if (error.response) {
                 for (let key in error.response.data) {
@@ -62,19 +64,13 @@ function Registration(props) {
 
     return (
         <div className="registrationPage">
-            <header>
-                <Link to="/">
-                    <Button value="Назад"/>
-                </Link>
-            </header>
+            <Header value = "Назад"></Header>
             <div className="registrationForm">
                 <h1>Регистрация</h1>
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
-                    <label>
+
                         <input placeholder=" Логин" onChange={onChangeEmail}
                         />
-                    </label>
-                    <label>
                         <Controller name="password"
                                     control={control}
                                     render={() => (
@@ -90,8 +86,6 @@ function Registration(props) {
                                         />
                                     )}
                         />
-                    </label>
-                    <label>
                         <Controller name="repeatPassword"
                                     control={control}
                                     rules={{validate: value => value === pwd || "Пароли не совпадают"}}
@@ -108,7 +102,6 @@ function Registration(props) {
                                         />
                                     )}
                         />
-                    </label>
                     <div>
                         {errors && <p>{errors || "Error!"}</p>}
                     </div>

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {useForm, Controller} from "react-hook-form"
 import './login.css'
-import {Link, useNavigate} from 'react-router-dom';
-import Button from "../../components/Buttons/Button";
-import axios from "axios";
+import {useNavigate} from 'react-router-dom';
+import Header from "../../components/Header/Header";
+import {login} from "../../services/services";
 
 
 function Login() {
@@ -13,76 +13,47 @@ function Login() {
     const [errors, setErrors] = useState("")
 
     const {
-        register,
-        formState: {isValid},
         handleSubmit,
         control
     } = useForm({
         mode: "onBlur"
     });
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
-    const onChangeEmail = (event) => {
-        setEmail(event.target.value);
-    }
-
-    const onChangePassword = (event) => {
-        setPassword(event.target.value);
-    }
-
-    const onSubmit = async (data) => {
-
-        const userData = {
-            email: email,
-            password: password
-        }
-
-        console.log(userData);
-
-        const user = await axios.post('https://calendar-test.k3s.bind.by/api/login/', userData).then(function (response) {
-            navigate('/calendar');
-            console.log(response);
-            document.cookie = `token = ${response.data.access}`;
-            console.log(document.cookie.match(/token=(.+?)(;|$)/)[1])
-        }).catch(function (error) {
-            if (error.response) {
-                for (let key in error.response.data) {
-                    setErrors(error.response.data[key][0]);
-                }
+    const onSubmit = (data) => {
+        login(data).then((token) => {
+            if (typeof token === 'string') {
+                navigate('/calendar')
+            }else{
+                setErrors(token['non_field_errors'][0])
             }
-        });
+        })
     }
 
     return (
         <div className="loginPage">
-            <header>
-                <Link to="/">
-                    <Button value="Назад"/>
-                </Link>
-            </header>
+            <Header value="Назад"></Header>
             <div className="loginForm">
                 <h1>Вход</h1>
-                <form action="" onSubmit={handleSubmit(onSubmit)}>
-                    <label>
-
-                        <input placeholder=" Логин" onChange={onChangeEmail}
-                        />
-                    </label>
-                    <label>
-                        <Controller name="password"
-                                    control={control}
-                                    render={() => (
-                                        <input placeholder=" Пароль" type="password" onChange={onChangePassword}
-                                        />
-                                    )}
-                        />
-                    </label>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Controller name="email"
+                                control={control}
+                                defaultValue=""
+                                render={({field}) => (
+                                    <input placeholder="Логин" type="email" {...field} />
+                                )}
+                    />
+                    <Controller name="password"
+                                control={control}
+                                defaultValue=""
+                                render={({field}) => (
+                                    <input placeholder=" Пароль" type="password" {...field} />
+                                )}
+                    />
                     <div>
                         {errors && <p>{errors || "Error!"}</p>}
                     </div>
-                    <button type="submit" disabled={!isValid}>Войти</button>
+                    <button type="submit">Войти</button>
                 </form>
             </div>
         </div>

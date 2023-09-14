@@ -7,20 +7,20 @@ import Header from "../../components/Header/Header";
 
 function AddTask(props) {
 
-    const {handleSubmit, control} = useForm();
+    const {handleSubmit,
+        control} = useForm();
 
     const date = useSelector((state) => state.day.date);
 
 
     const onSubmit = (data) => {
         data.day = date;
-        console.log(data);
         addTask(data);
     }
 
     return (
         <div>
-            <Header></Header>
+            <Header value = "Назад"></Header>
             <div className="addTask">
                 <h1>Добавить задачу</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="form">

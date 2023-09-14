@@ -7,7 +7,7 @@ function Header(props) {
     return (
         <div className="header">
             <Link to="/">
-                <Button value = "Выход" registration = "registration"/>
+                <Button value = {props.value} registration = "registration"/>
             </Link>
         </div>
     );
