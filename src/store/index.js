@@ -1,9 +1,8 @@
 import {configureStore} from "@reduxjs/toolkit";
-import userReducer from './slices/userSlice'
+import dayReducer from './slices/dayDateSlice';
 
 export const store = configureStore({
-    reducer:{
-        user: userReducer,
-    },
-
+    reducer: {
+        day: dayReducer
+    }
 })

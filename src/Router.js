@@ -5,6 +5,7 @@ import Authentication from "./pages/Authentication/Authentication";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
 import DayPage from "./pages/DayPage/DayPage";
+import AddTask from "./pages/AddTask/AddTask";
 
 const Router =  () => {
     return(
@@ -15,6 +16,7 @@ const Router =  () => {
                 <Route element={<Login/>} path='/login'/>
                 <Route element={<Registration/>} path='/registration'/>
                 <Route element={<DayPage/>} path='/dayPage'/>
+                <Route element={<AddTask/>} path='/addTask'/>
             </Routes>
         </BrowserRouter>
     )

@@ -2,7 +2,10 @@ import React, {useState, useRef, useEffect} from 'react';
 import './Calendar.css';
 import * as calendar from './CalendarFunctions';
 import {useNavigate} from 'react-router-dom';
-import axios from "axios";
+import {setDayDate} from "../../store/slices/dayDateSlice";
+import {useDispatch} from "react-redux";
+import {getDayInformation} from "../../services/services"
+
 
 function Calendar(props) {
     const [date, setDate] = useState(props.date);
@@ -10,6 +13,7 @@ function Calendar(props) {
     const [selectedDate, setSelectedDate] = useState(null);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const year = date.getFullYear();
     const monthValue = date.getMonth();
@@ -55,21 +59,24 @@ function Calendar(props) {
 
     const dayClick = (date) => {
         setSelectedDate(date);
-        props.onChange(date);
+        dispatch(setDayDate(getCorrectDay(date)));
         navigate('/dayPage');
     };
 
-
-    const getDayInformation = async () => {
-        const dayData1 = await axios.get('https://calendar-test.k3s.bind.by/api/records/?year=2023',
-            {headers: {Authorization: `Bearer ${document.cookie.match(/token=(.+?)(;|$)/)[1]}`}}).then(function (response) {
-            setDayData(response.data);
-            console.log(response.data)
-        }).catch(function (error) {
-            console.log(error)
-        });
+    const [dayData,setDayData] = useState({});
+    const fetchData = async () => {
+        const data = await getDayInformation(year,monthValue)
+        setDayData(data);
     }
-    const [dayData, setDayData] = useState(getDayInformation);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const getCorrectDay = (date) => {
+        return `${date.getFullYear()}-${date.toLocaleString("default", {month: "2-digit"})}-${date.toLocaleString("default", {day: "2-digit"})}`;
+    }
+
     const {years, month, weekDays} = props;
     const monthData = calendar.getMonthData(selectedYear.current, selectedMonth.current);
 
@@ -93,7 +100,7 @@ function Calendar(props) {
                     ))}
                 </select>
                 <button onClick={nextMonthButtonClick}>{'>'}</button>
-                <button onClick={getDayInformation}>test</button>
+
             </header>
             <table className="table">
                 <thead>
@@ -117,10 +124,9 @@ function Calendar(props) {
                                 >
                                     <h6>{date.getDate()}</h6>
                                     <div>
-                                        {dayData[`${date.getFullYear()}-${date.toLocaleString("default", {month: "2-digit"})}-${date.toLocaleString("default", {day: "2-digit"})}`] != undefined ?
-                                            dayData[`${date.getFullYear()}-${date.toLocaleString("default", {month: "2-digit"})}-${date.toLocaleString("default", {day: "2-digit"})}`]
-                                                .map((task, index) => (
-                                                    <div key={index}>{task.start_time} {task.end_time}</div>)) : ""}
+                                        {dayData[getCorrectDay(date)] ?
+                                            dayData[getCorrectDay(date)].map((task, index) => (
+                                                    <div className="taskPreview" key={index}>{task.name}</div>)) : ""}
                                     </div>
                                 </td>
                             ) : (
