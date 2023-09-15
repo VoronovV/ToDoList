@@ -33,11 +33,8 @@ export const deleteRecordByPk = async (pk) => {
         const response = await axios.delete(`https://calendar-test.k3s.bind.by/api/records/${pk}`,
             {headers: {Authorization: `Bearer ${document.cookie.match(/token=(.+?)(;|$)/)[1]}`}});
         if (response.status === 204) {
-            // Успешное удаление (статус 204 No Content)
-            console.log(`Запись с pk ${pk} успешно удалена.`);
         }
     } catch (error) {
-        console.error(`Ошибка при удалении записи с pk ${pk}:`, error);
     }
 }
 
@@ -71,14 +68,12 @@ export const registration = async (data) => {
 }
 
 export const editRecordByPk = async (data) => {
-    console.log(data);
-    console.log(data.pk);
     try {
-        const response = await axios.patch(`https://calendar-test.k3s.bind.by/api/records/${data.pk}/`,
-            {name: "asdasd"}, {headers: {Authorization: `Bearer ${document.cookie.match(/token=(.+?)(;|$)/)[1]}`}});
+        const response = await axios.patch(`https://calendar-test.k3s.bind.by/api/records/${data.pk}`,
+            data, {headers: {Authorization: `Bearer ${document.cookie.match(/token=(.+?)(;|$)/)[1]}`}});
     } catch (error) {
         const errors = error.response.data;
-        console.log(errors);
+
         return errors;
     }
 }

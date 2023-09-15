@@ -17,7 +17,6 @@ const ModalWindowEdit = ({isOpen, closeModal, task}) => {
     const [errors, setErrors] = useState("");
 
     const onSubmit = (data) => {
-        console.log(task)
         data.day = date;
         data.pk = task.pk;
         editRecordByPk(data).then((response) => {
