@@ -69,11 +69,11 @@ export const registration = async (data) => {
 
 export const editRecordByPk = async (data) => {
     try {
-        const response = await axios.patch(`https://calendar-test.k3s.bind.by/api/records/${data.pk}`,
+        const response = await axios.patch(`https://calendar-test.k3s.bind.by/api/records/${data.pk}/`,
             data, {headers: {Authorization: `Bearer ${document.cookie.match(/token=(.+?)(;|$)/)[1]}`}});
+        return null;
     } catch (error) {
         const errors = error.response.data;
-
         return errors;
     }
 }

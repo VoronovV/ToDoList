@@ -4,7 +4,7 @@ import styles from './modalWindowEdit.module.css'
 import {Controller, useForm} from "react-hook-form";
 import TimePicker from "../DatePicker/DatePicker";
 import {editRecordByPk} from "../../services/services";
-import {useNavigate} from "react-router-dom";
+
 
 const ModalWindowEdit = ({isOpen, closeModal, task}) => {
 
@@ -13,19 +13,18 @@ const ModalWindowEdit = ({isOpen, closeModal, task}) => {
         control
     } = useForm();
     const date = localStorage.getItem('day');
-    const navigate = useNavigate();
     const [errors, setErrors] = useState("");
 
     const onSubmit = (data) => {
         data.day = date;
         data.pk = task.pk;
         editRecordByPk(data).then((response) => {
-            if (!response) {
-                navigate('/dayPage')
-            } else {
+            if (response) {
                 for (let key in response) {
                     setErrors(response[key]);
                 }
+            } else {
+                closeModal();
             }
         })
 
