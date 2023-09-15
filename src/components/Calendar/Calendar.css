@@ -30,7 +30,7 @@
 
 .calendar header button:active {
     filter: brightness(0.6);
-    transition:  0.1s ease;
+    transition: 0.1s ease;
 }
 
 .calendar header select {
@@ -53,16 +53,18 @@
     transition: 0.1s ease;
 }
 
-/*настроить option*/
 
 .cell {
     width: 14.2%;
     height: 120px;
     border: 1px solid #707279;
+    vertical-align: top;
 }
+
 .cell:hover {
     background-color: #eaeaea;
     cursor: pointer;
+
 }
 
 .empty-cell {
@@ -88,11 +90,14 @@
 }
 
 .taskPreview {
-    background-color: palevioletred;
-
+    margin: 5px auto;
+    background-color: #FDDE0D;
     border-radius: 5px;
-    margin-bottom: 2px;
-    margin-left: 5px;
     width: 150px;
+}
 
+.numberOfDay {
+    text-align: left;
+    vertical-align: top;
+    margin-bottom: 15px;
 }

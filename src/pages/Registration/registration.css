@@ -43,13 +43,13 @@ header {
     background-color: #FDDE0D;
 }
 
-.registrationForm form button:hover{
+.registrationForm form button:hover {
     filter: brightness(0.9);
     transition: 0.5s ease;
     cursor: pointer;
 }
 
-.registrationForm form button:disabled{
+.registrationForm form button:disabled {
     background-color: white;
     filter: brightness(0.9);
 }

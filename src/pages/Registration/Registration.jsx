@@ -1,111 +1,67 @@
 import React, {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Controller, useForm} from "react-hook-form";
-import Button from "../../components/Buttons/Button";
 import './registration.css'
 import axios from "axios";
 import Header from "../../components/Header/Header";
+import {registration} from "../../services/services";
 
 function Registration(props) {
 
     const navigate = useNavigate();
-
     const [errors, setErrors] = useState("")
 
     const {
-        register,
-        formState: {isValid},
         handleSubmit,
         control,
-        watch
     } = useForm({
         mode: "onBlur"
     });
-    let pwd = watch("password");
 
-    const [email, setEmail] = useState("");
-    const [password1, setPassword1] = useState("");
-    const [password2, setPassword2] = useState("");
 
-    const onChangeEmail = (event) => {
-        setEmail(event.target.value);
-    }
-
-    const onChangePassword1 = (event) => {
-        setPassword1(event.target.value);
-    }
-
-    const onChangePassword2 = (event) => {
-        setPassword2(event.target.value);
-    }
-
-    const onSubmit = async (data) => {
-        const userData = {
-            email: email,
-            password1: password1,
-            password2: password2
-        }
-
-        console.log(userData);
-
-        const user = await axios.post('https://calendar-test.k3s.bind.by/api/registration/', userData).then(function (response) {
-            navigate('/calendar');
-
-        }).catch(function (error) {
-            if (error.response) {
-                for (let key in error.response.data) {
-                    setErrors(error.response.data[key][0]);
+    const onSubmit = (data) => {
+        registration(data).then((token) => {
+            if (typeof token === 'string') {
+                navigate('/calendar')
+            } else {
+                for (let key in token) {
+                    setErrors(token[key][0]);
                 }
             }
-        });
-
-
+        })
     }
 
     return (
         <div className="registrationPage">
-            <Header value = "Назад"></Header>
+            <Header value="Назад"></Header>
             <div className="registrationForm">
                 <h1>Регистрация</h1>
-                <form action="" onSubmit={handleSubmit(onSubmit)}>
-
-                        <input placeholder=" Логин" onChange={onChangeEmail}
-                        />
-                        <Controller name="password"
-                                    control={control}
-                                    render={() => (
-                                        <input placeholder=" Пароль" type="password" {
-                                            ...register("password", {
-                                                required: "Поле обязательно к заполнению",
-                                                minLength: {
-                                                    value: 5,
-                                                    message: "Минимум 5 символов"
-                                                }
-                                            })
-                                        } onChange={onChangePassword1}
-                                        />
-                                    )}
-                        />
-                        <Controller name="repeatPassword"
-                                    control={control}
-                                    rules={{validate: value => value === pwd || "Пароли не совпадают"}}
-                                    render={() => (
-                                        <input placeholder=" Повтор пароля" type="password" {
-                                            ...register("repeatPassword", {
-                                                required: "Поле обязательно к заполнению",
-                                                minLength: {
-                                                    value: 5,
-                                                    message: "Минимум 5 символов"
-                                                }
-                                            })
-                                        } onChange={onChangePassword2}
-                                        />
-                                    )}
-                        />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Controller name="email"
+                                control={control}
+                                defaultValue=""
+                                render={({field}) => (
+                                    <input placeholder="Логин" type="email" {...field} />
+                                )}
+                    />
+                    <Controller name="password1"
+                                control={control}
+                                defaultValue=""
+                                render={({field}) => (
+                                    <input placeholder="Пароль" type="password" {...field} />
+                                )}
+                    />
+                    <Controller name="password2"
+                                control={control}
+                                defaultValue=""
+                                render={({field}) => (
+                                    <input placeholder="Повтор пароля" type="password" {...field} />
+                                )}
+                    />
                     <div>
                         {errors && <p>{errors || "Error!"}</p>}
                     </div>
-                    <button type="submit" disabled={!isValid}>Войти</button>
+                    <button type="submit">Войти</button>
                 </form>
             </div>
         </div>

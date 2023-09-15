@@ -24,7 +24,7 @@
 
 .button:active {
     filter: brightness(0.6);
-    transition:  0.1s ease;
+    transition: 0.1s ease;
 }
 
 .registration {

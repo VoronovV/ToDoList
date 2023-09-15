@@ -1,31 +1,39 @@
-.dayPage{
-    margin: auto;
+.dayPage {
+    margin: 30px auto;
     width: 1300px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.tasks{
-    margin-bottom: 50px;
+.tasks {
     margin-top: 50px;
 }
 
-.task{
+.task {
+    width: 800px;
     display: flex;
     align-items: center;
-    gap: 150px;
+    justify-content: space-between;
     margin-bottom: 50px;
     border: 1px solid darkgrey;
     border-radius: 20px;
     padding: 20px;
 }
 
-.buttons{
+.buttons {
+
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-button{
+
+button {
     width: 100px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

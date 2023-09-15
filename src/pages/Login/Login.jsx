@@ -9,7 +9,6 @@ import {login} from "../../services/services";
 function Login() {
 
     const navigate = useNavigate();
-
     const [errors, setErrors] = useState("")
 
     const {
@@ -24,8 +23,10 @@ function Login() {
         login(data).then((token) => {
             if (typeof token === 'string') {
                 navigate('/calendar')
-            }else{
-                setErrors(token['non_field_errors'][0])
+            } else {
+                for (let key in token) {
+                    setErrors(token[key][0]);
+                }
             }
         })
     }
@@ -39,6 +40,7 @@ function Login() {
                     <Controller name="email"
                                 control={control}
                                 defaultValue=""
+
                                 render={({field}) => (
                                     <input placeholder="Логин" type="email" {...field} />
                                 )}

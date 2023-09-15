@@ -1,0 +1,41 @@
+.customModal {
+    width: 1200px;
+    height: 650px;
+    margin: 150px auto;
+    border: 3px solid darkgrey;
+    border-radius: 40px;
+    background-color: darkgrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttonModal {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-left: 1000px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.name {
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+button {
+    background-color: #FDDE0D;
+}
+
+.input {
+    border-radius: 20px;
+    height: 50px;
+    width: 300px;
+    padding: 15px;
+}
+
+.mainText {
+    margin-top: 200px;
+}
