@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {useForm, Controller} from "react-hook-form"
-import './login.css'
+import styles from './login.module.css'
 import {useNavigate} from 'react-router-dom';
 import Header from "../../components/Header/Header";
 import {login} from "../../services/services";
+import Button from "../../components/Buttons/Button";
 
 
 function Login() {
@@ -32,15 +33,14 @@ function Login() {
     }
 
     return (
-        <div className="loginPage">
+        <div className={styles.loginPage}>
             <Header value="Назад"></Header>
-            <div className="loginForm">
+            <div className={styles.loginForm}>
                 <h1>Вход</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Controller name="email"
                                 control={control}
                                 defaultValue=""
-
                                 render={({field}) => (
                                     <input placeholder="Логин" type="email" {...field} />
                                 )}
@@ -52,10 +52,10 @@ function Login() {
                                     <input placeholder=" Пароль" type="password" {...field} />
                                 )}
                     />
-                    <div>
+                    <div className={styles.error}>
                         {errors && <p>{errors || "Error!"}</p>}
                     </div>
-                    <button type="submit">Войти</button>
+                    <Button value="Войти"></Button>
                 </form>
             </div>
         </div>

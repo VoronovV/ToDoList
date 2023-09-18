@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../../components/Header/Header";
 import Button from "../../components/Buttons/Button";
-import "./dayPage.css"
+import styles from "./dayPage.module.css"
 import {deleteRecordByPk, getDay} from "../../services/services";
 import {Link} from "react-router-dom";
 import Calendar from "../../components/Calendar/Calendar";
@@ -46,21 +46,20 @@ function DayPage() {
             <ModalWindowDelete isOpen={isModalOpen} closeModal={closeModal}/>
             <Header path="calendar" value="Назад">
             </Header>
-            <div className="dayPage">
+            <div className={styles.dayPage}>
                 <h2>{`${Calendar.defaultProps.month[parseInt(splitDate[1]) - 1]} ${splitDate[2]} ${splitDate[0]}`}</h2>
-                <div className="tasks">
+                <div className={styles.tasks}>
                     {dayData && dayData.map((task, index) => (
-                        <div key={index} className="task">
+                        <div key={index} className={styles.task}>
                             <ModalWindowEdit isOpen={isModalOpenEdit} closeModal={closeModal} task={task}/>
-                            <div className="description">
+                            <div className={styles.description}>
                                 <h3>{task.name}</h3>
                                 <section>{task.description}</section>
                                 <p>{task.start_time} - {task.end_time}</p>
                             </div>
-                            <div className="buttons">
-
-                                <button onClick={() => handleClickEdit()}>Изменить</button>
-                                <button onClick={() => handleClickDelete(task.pk)}>Удалить</button>
+                            <div className={styles.buttons}>
+                                <Button value="Изменить" onClick = {() => handleClickEdit()}></Button>
+                                <Button value="Удалить" onClick = {() => handleClickDelete(task.pk)}></Button>
                             </div>
                         </div>
                     ))}

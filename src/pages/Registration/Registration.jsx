@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {Controller, useForm} from "react-hook-form";
-import './registration.css'
-import axios from "axios";
+import styles from './registration.module.css'
 import Header from "../../components/Header/Header";
 import {registration} from "../../services/services";
+import Button from "../../components/Buttons/Button";
 
 function Registration(props) {
-
     const navigate = useNavigate();
     const [errors, setErrors] = useState("")
 
@@ -32,9 +31,9 @@ function Registration(props) {
     }
 
     return (
-        <div className="registrationPage">
+        <div className={styles.registrationPage}>
             <Header value="Назад"></Header>
-            <div className="registrationForm">
+            <div className={styles.registrationForm}>
                 <h1>Регистрация</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Controller name="email"
@@ -58,10 +57,10 @@ function Registration(props) {
                                     <input placeholder="Повтор пароля" type="password" {...field} />
                                 )}
                     />
-                    <div>
+                    <div className={styles.error}>
                         {errors && <p>{errors || "Error!"}</p>}
                     </div>
-                    <button type="submit">Войти</button>
+                    <Button value="Регистарция"></Button>
                 </form>
             </div>
         </div>

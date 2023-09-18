@@ -16,21 +16,9 @@
 .calendar header button {
     width: 50px;
     height: 50px;
-    border: 1px solid darkgrey;
     border-radius: 100px;
     font-weight: bold;
     background-color: white;
-}
-
-.calendar header button:hover {
-    filter: brightness(0.9);
-    transition: 0.5s ease;
-    cursor: pointer;
-}
-
-.calendar header button:active {
-    filter: brightness(0.6);
-    transition: 0.1s ease;
 }
 
 .calendar header select {
@@ -67,7 +55,7 @@
 
 }
 
-.empty-cell {
+.emptyCell {
     width: 14.2%;
     height: 120px;
     border: 1px solid #707279;

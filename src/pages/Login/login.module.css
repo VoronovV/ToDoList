@@ -3,13 +3,13 @@ header {
     padding-top: 20px;
 }
 
-.registrationPage header {
+.loginPage header {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.registrationForm {
+.loginForm {
     width: 1000px;
     height: 500px;
     margin: 150px auto;
@@ -17,21 +17,21 @@ header {
     border-radius: 20px;
 }
 
-.registrationForm h1 {
+.loginForm h1 {
     text-align: center;
     margin-top: 50px;
 }
 
-.registrationForm form {
+.loginForm form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
 }
 
-.registrationForm form input, button {
+.loginForm form input {
     width: 300px;
     height: 50px;
     border: 1px solid darkgrey;
@@ -39,19 +39,8 @@ header {
     border-radius: 20px;
 }
 
-.registrationForm form button {
-    background-color: #FDDE0D;
-}
-
-.registrationForm form button:hover {
-    filter: brightness(0.9);
-    transition: 0.5s ease;
-    cursor: pointer;
-}
-
-.registrationForm form button:disabled {
-    background-color: white;
-    filter: brightness(0.9);
+.loginForm form button {
+    width: 300px;
 }
 
 p {
@@ -61,4 +50,7 @@ p {
 p::before {
     display: inline;
     content: "⚠ ";
+}
+.error {
+    height: 50px;
 }

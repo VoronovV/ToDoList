@@ -1,5 +1,5 @@
 import React from 'react';
-import './header.css'
+import styles from './header.module.css'
 import Button from "../Buttons/Button";
 import {Link} from "react-router-dom";
 
@@ -7,9 +7,9 @@ function Header(props) {
     let pathTo = `/${props.path}`
 
     return (
-        <div className="header">
+        <div className={styles.header}>
             <Link to={pathTo}>
-                <Button value={props.value} registration="registration"/>
+                <Button value={props.value}/>
             </Link>
         </div>
     );

@@ -1,9 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
-import './Calendar.css';
+import styles from './Calendar.module.css';
 import * as calendar from './CalendarFunctions';
 import {useNavigate} from 'react-router-dom';
 import {getDayInformation} from "../../services/services"
 import Header from "../Header/Header";
+import Button from "../Buttons/Button";
 
 
 function Calendar(props) {
@@ -90,10 +91,9 @@ function Calendar(props) {
     return (
         <div>
             <Header value="Выход"></Header>
-            <div className="calendar">
-
+            <div className={styles.calendar}>
                 <header>
-                    <button onClick={prevMonthButtonClick}>{'<'}</button>
+                    <Button value = "<" onClick = {prevMonthButtonClick}></Button>
                     <select value={selectedMonth.current} ref={monthSelectRef} onChange={selectChange}>
                         {month.map((name, index) => (
                             <option key={name} value={index}>
@@ -108,10 +108,9 @@ function Calendar(props) {
                             </option>
                         ))}
                     </select>
-                    <button onClick={nextMonthButtonClick}>{'>'}</button>
-
+                    <Button value = ">" onClick = {nextMonthButtonClick}></Button>
                 </header>
-                <table className="table">
+                <table className={styles.table}>
                     <thead>
                     <tr>
                         {weekDays.map((day) => (
@@ -129,21 +128,21 @@ function Calendar(props) {
                                             dayClick(date);
                                         }}
                                         key={index}
-                                        className="cell"
+                                        className={styles.cell}
                                     >
-                                        <h4 className="numberOfDay">{date.getDate()}</h4>
+                                        <h4 className={styles.numberOfDay}>{date.getDate()}</h4>
                                         <div>
                                             {dayData[getCorrectDay(date)] ? (
                                                 dayData[getCorrectDay(date)]
                                                     .slice(0, 3) // Ограничение до первых трех элементов
                                                     .map((task, index) => (
-                                                        <div className="taskPreview" key={index}>{task.name}</div>
+                                                        <div className={styles.taskPreview} key={index}>{task.name}</div>
                                                     ))
                                             ) : ""}
                                         </div>
                                     </td>
                                 ) : (
-                                    <td key={index} className="empty-cell"></td>
+                                    <td key={index} className={styles.emptyCell}></td>
                                 )
                             )}
                         </tr>

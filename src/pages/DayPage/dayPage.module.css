@@ -22,14 +22,9 @@
 }
 
 .buttons {
-
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-button {
-    width: 100px;
 }
 
 .description {

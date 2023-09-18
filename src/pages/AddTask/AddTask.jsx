@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {addTask} from "../../services/services";
 import {useForm, Controller} from 'react-hook-form';
-import "./addTask.css"
+import styles from "./addTask.module.css"
 import Header from "../../components/Header/Header";
 import {useNavigate} from 'react-router-dom';
 import TimePicker from "../../components/DatePicker/DatePicker";
+import Button from "../../components/Buttons/Button";
 
 function AddTask(props) {
 
@@ -35,20 +36,20 @@ function AddTask(props) {
     return (
         <div>
             <Header value="Назад" path="dayPage"></Header>
-            <div className="addTask">
+            <div className={styles.addTask}>
                 <h1>Добавить задачу</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className="form">
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <Controller
                         name="name"
                         control={control}
                         defaultValue=""
-                        render={({field}) => <input className="input" placeholder="Название" {...field} />}
+                        render={({field}) => <input placeholder="Название" {...field} />}
                     />
                     <Controller
                         name="description"
                         control={control}
                         defaultValue=""
-                        render={({field}) => <textarea className="input" placeholder="Описание" {...field} />}
+                        render={({field}) => <textarea placeholder="Описание" {...field} />}
                     />
                     <Controller
                         name="start_time"
@@ -67,7 +68,7 @@ function AddTask(props) {
                     <div>
                         {errors && <p>{errors || "Error!"}</p>}
                     </div>
-                    <button type="submit">Добавить</button>
+                    <Button value="Добавить"></Button>
                 </form>
             </div>
         </div>
