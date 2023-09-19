@@ -15,7 +15,7 @@ function DayPage() {
     const date = localStorage.getItem('day');
     const splitDate = date ? date.split('-') : "";
     const [dayData, setDayData] = useState([]);
-
+    const [editTask, setEditTask] = useState({});
 
     const fetchData = async () => {
         const data = await getDay(splitDate, date)
@@ -31,7 +31,9 @@ function DayPage() {
         setIsModalOpen(true);
     }
 
-    const handleClickEdit = () => {
+    const handleClickEdit = (task) => {
+        setEditTask(task);
+        console.log(editTask);
         setIsModalOpenEdit(true);
     }
 
@@ -51,14 +53,14 @@ function DayPage() {
                 <div className={styles.tasks}>
                     {dayData && dayData.map((task, index) => (
                         <div key={index} className={styles.task}>
-                            <ModalWindowEdit isOpen={isModalOpenEdit} closeModal={closeModal} task={task}/>
+                            <ModalWindowEdit isOpen={isModalOpenEdit} closeModal={closeModal} task={editTask}/>
                             <div className={styles.description}>
                                 <h3>{task.name}</h3>
                                 <section>{task.description}</section>
                                 <p>{task.start_time} - {task.end_time}</p>
                             </div>
                             <div className={styles.buttons}>
-                                <Button value="Изменить" onClick = {() => handleClickEdit()}></Button>
+                                <Button value="Изменить" onClick = {() => handleClickEdit(task)}></Button>
                                 <Button value="Удалить" onClick = {() => handleClickDelete(task.pk)}></Button>
                             </div>
                         </div>

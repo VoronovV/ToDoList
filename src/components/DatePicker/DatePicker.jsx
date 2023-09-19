@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {Controller} from 'react-hook-form';
 import {format} from 'date-fns';
-import styles from "../ModalWindows/modalWindowEdit.module.css"
 
 function TimePicker({control, name, placeholder, defaultValue}) {
     let currentDate = new Date(); // Получаем текущую дату и время
@@ -38,7 +37,6 @@ function TimePicker({control, name, placeholder, defaultValue}) {
                 render={({field}) => (
                     <DatePicker
                         selected={selectedTime}
-                        className={styles.input}
                         onChange={(date) => {
                             handleTimeChange(date);
                             const formattedTime = format(date, 'HH:mm:ss');
